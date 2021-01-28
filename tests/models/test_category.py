@@ -31,7 +31,6 @@ def test_name_nostring():
     except Exception as error:
         assert isinstance(error, TypeError), 'Invalid Exception!'
 
-
 def test_name_lenght():
     try:
         cat = Category('*' * 201, description)
@@ -45,4 +44,3 @@ def test_description_lenght():
         raise NotImplementedError('Exception not raised!')
     except ValueError as error:
         assert isinstance(error, ValueError), 'Invalid Exception!'
-
