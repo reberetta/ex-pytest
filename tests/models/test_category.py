@@ -1,46 +1,46 @@
 import sys
+
 sys.path.append('.')
+import pytest
 
 from models.category import Category
 
-name = 'Smartphone'
-description = 'Uma descrição de categoria'
 
-def test_instance():
-    cat = Category(name, description)
-    assert isinstance(cat, Category)
+# name = 'Smartphone'
+# description = 'Uma descrição de categoria'
 
-def test_empty_name():
-    try:
-        cat = Category('', description)
-        raise NotImplementedError('Exception not raised!')
-    except Exception as error:
-        assert isinstance(error, ValueError), 'Invalid Exception!'
 
-def test_none_name():
-    try:
-        cat = Category(None, description)
-        raise NotImplementedError('Exception not raised!')
-    except Exception as error:
-        assert isinstance(error, TypeError), 'Invalid Exception!'
+@pytest.mark.parametrize("name, description", [
+    ('Nada', ''),
+    ('', 'fgssrhyrshyrs'),
+    (None, 'fasfafaf'),
+    ('fasfafaf', None),
+    ('N' * 220, 'D' * 255),
+    ('N' * 120, 'D' * 520),
+    (10, 'teste'),
+    ('fsfsdf',15)
+])
+def test_empty_name(name, description):
+    with pytest.raises(ValueError):
+        cat = Category(name, description)
 
-def test_name_nostring():
-    try:
-        cat = Category(10, description)
-        raise NotImplementedError('Exception not raised!')
-    except Exception as error:
-        assert isinstance(error, TypeError), 'Invalid Exception!'
 
-def test_name_lenght():
-    try:
-        cat = Category('*' * 201, description)
-        raise NotImplementedError('Exception not raised!')
-    except ValueError as error:
-        assert isinstance(error, ValueError), 'Invalid Exception!'
+@pytest.mark.parametrize("name, description", [
+    ('Nada', '52352323'),
+    ('42342', 'fgssrhyrshyrs'),
+    ('None', 'fasfafaf'),
+    ('fasfafaf', 'None'),
+    ('N' * 20, 'D' * 55),
+    ('N' * 20, 'D' * 20)
+])
+def test_Category(name, description):
+    Category(name, description)
 
-def test_description_lenght():
-    try:
-        cat = Category(name, '*' * 501)
-        raise NotImplementedError('Exception not raised!')
-    except ValueError as error:
-        assert isinstance(error, ValueError), 'Invalid Exception!'
+
+@pytest.mark.parametrize("name, description", [
+    (10, 'teste'),
+    ('fsfsdf',15)
+])
+def test_empty_name(name, description):
+    with pytest.raises(TypeError):
+        cat = Category(name, description)
