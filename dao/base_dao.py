@@ -7,7 +7,7 @@ class BaseDao:
         self.__type_model = type_model
         
     def save(self, model: BaseModel) -> BaseModel:
-        if isinstance(model, BaseModel):
+        if isinstance(model, self.__type_model):
             with Session() as session:
                 session.add(model)
                 session.commit()
@@ -29,6 +29,9 @@ class BaseDao:
         return result
     
     def delete(self, model: BaseModel) -> None:
-        with Session() as session:
-            result = session.delete(model)
-            session.commit()
+        if isinstance(model, self.__type_model):
+            with Session() as session:
+                result = session.delete(model)
+                session.commit()
+        else:
+            raise TypeError('Invalid Model')

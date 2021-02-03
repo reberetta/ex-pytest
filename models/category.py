@@ -1,14 +1,11 @@
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import validates
-from sqlalchemy.ext.declarative import declarative_base
 from utils.validators import validate_type, validate_not_empty, validate_len, validate_be_greater_than_zero
+from models.base_model import BaseModel
 
-Base = declarative_base()
 
-
-class Category(Base):
-    __tablename__ = 'categories'
-    id = Column(Integer, primary_key=True)
+class Category(BaseModel):
+    __tablename__ = 'category'
     name = Column(String(length=200), nullable=False)
     description = Column(String(length=500), nullable=False)
 

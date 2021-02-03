@@ -57,3 +57,7 @@ class TestCategoryController:
         assert object_.description == 'b'
         assert isinstance(object_, Category)
         create_instance.delete(object_)
+    
+    def test_delete_not_valid_model(self, create_instance):
+    with pytest.raises(TypeError):
+        create_instance.delete('a')
